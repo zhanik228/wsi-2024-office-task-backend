@@ -12,7 +12,8 @@ use Illuminate\Support\Str;
 
 class LoginController extends Controller
 {
-    public function login(Request $request) {
+    public function login(Request $request)
+    {
 
         $username = $request->username;
         $avatar = $request->avatar;
@@ -32,11 +33,21 @@ class LoginController extends Controller
                 'chat_room_id' => 1
             ]);
 
-            Slot::where('chat_room_id', 1)
+            if (!Slot::where('chat_room_id', 1)
                 ->where('id', 1)
-                ->update([
-                    'user_id' => $user->id
-                ]);
+                ->first()->user_id) {
+                Slot::where('chat_room_id', 1)
+                    ->where('id', 1)
+                    ->update([
+                        'user_id' => $user->id
+                    ]);
+            } else {
+                Slot::where('chat_room_id', 1)
+                    ->where('id', 2)
+                    ->update([
+                        'user_id' => $user->id
+                    ]);
+            }
         }
 
         $token = $user->createToken('myapptoken')->plainTextToken;
@@ -51,7 +62,8 @@ class LoginController extends Controller
         return 'no user found';
     }
 
-    public function logout(Request $request) {
+    public function logout(Request $request)
+    {
         auth()->user()->tokens()->delete();
 
         return response()->json([
