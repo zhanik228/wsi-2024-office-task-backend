@@ -9,6 +9,16 @@ class ChatRoom extends Model
 {
     use HasFactory;
 
+    protected $appends = ['unavailable'];
+
+    public function getUnavailableAttribute() {
+        return $this->slot;
+    }
+
+    public function slot() {
+        return $this->hasMany(Slot::class)->whereNotNull('user_id');
+    }
+
     public function messages() {
         return $this->hasMany('App\Models\ChatMessage');
     }

@@ -11,6 +11,10 @@ class Slot extends Model
 
     protected $appends = ['user'];
 
+    protected $fillable = [
+        'user_id'
+    ];
+
     public function getUserAttribute() {
         return User::where('id', $this->user_id)->first();
     }

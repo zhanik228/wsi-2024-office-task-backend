@@ -42,8 +42,12 @@ class UserController extends Controller
         $avatarPath = '';
         if ($request->avatar) {
             $avatarPath = "/avatars/$avatar";
+            $user->update([
+                'avatar' => $avatarPath
+            ]);
         }
-        User::find($id)->update(['avatar' => $avatarPath, 'chat_room_id' => $request->chat_room_id]);
+        $user = User::find($id);
+        $user->update(['chat_room_id' => $request->chat_room_id ]);
         return User::find($id);
     }
 

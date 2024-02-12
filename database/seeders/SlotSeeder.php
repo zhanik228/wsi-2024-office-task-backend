@@ -53,6 +53,35 @@ class SlotSeeder extends Seeder
 
         DB::table('slots')->insert($theOfficeSlots);
 
+        $deskChat = ChatRoom::where('name', 'Desk')->firstOrFail();
 
+        $deskSlots = [
+            [
+                'chat_room_id' => $deskChat->id,
+                'position_x' => 455,
+                'position_y' => 63,
+                'user_id' => null,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'chat_room_id' => $deskChat->id,
+                'position_x' => 455,
+                'position_y' => 63,
+                'user_id' => null,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'chat_room_id' => $deskChat->id,
+                'position_x' => 455,
+                'position_y' => 63,
+                'user_id' => null,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+        ];
+
+        DB::table('slots')->insert($deskSlots);
     }
 }

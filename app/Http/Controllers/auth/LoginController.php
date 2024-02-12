@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\auth;
 
+use App\Events\ColumnUpdate;
 use App\Http\Controllers\Controller;
+use App\Models\ChatRoom;
 use App\Models\Slot;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -33,6 +35,8 @@ class LoginController extends Controller
                 'chat_room_id' => 1
             ]);
 
+            $chatRoomLength = count(ChatRoom::all());
+
             if (!Slot::where('chat_room_id', 1)
                 ->where('id', 1)
                 ->first()->user_id) {
@@ -41,6 +45,7 @@ class LoginController extends Controller
                     ->update([
                         'user_id' => $user->id
                     ]);
+
             } else {
                 Slot::where('chat_room_id', 1)
                     ->where('id', 2)
@@ -48,6 +53,9 @@ class LoginController extends Controller
                         'user_id' => $user->id
                     ]);
             }
+            $chatRooms = ChatRoom::with('slot')->get();
+
+            broadcast(new ColumnUpdate($chatRooms));
         }
 
         $token = $user->createToken('myapptoken')->plainTextToken;

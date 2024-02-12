@@ -12,4 +12,5 @@ class ColumnController extends Controller
     public function getAllColumns() {
         return ChatRoom::with('slots')->get();
     }
+
 }

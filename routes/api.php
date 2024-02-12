@@ -33,5 +33,6 @@ Route::middleware('json.response')->prefix('v1')->group(function() {
    Route::middleware(['auth:sanctum',])->get('/chat/rooms', [\App\Http\Controllers\ChatController::class, 'rooms']);
     Route::middleware(['auth:sanctum',])->get('/chat/room/{roomId}/messages', [\App\Http\Controllers\ChatController::class, 'messages']);
     Route::middleware(['auth:sanctum',])->post('/chat/room/{roomId}/message', [\App\Http\Controllers\ChatController::class, 'newMessage']);
-    Route::get('/column', [\App\Http\Controllers\ColumnController::class, 'getAllColumns']);
+    Route::get('/columns', [\App\Http\Controllers\ColumnController::class, 'getAllColumns']);
+    Route::put('/slot/{slot_id}/user/{user_id}', [\App\Http\Controllers\SlotController::class, 'updateSlot']);
 });

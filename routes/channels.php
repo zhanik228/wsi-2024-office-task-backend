@@ -23,3 +23,9 @@ Broadcast::channel('chat.{roomId}', function ($user, $roomId) {
         return ['id' => $user->id, 'name' => $user->username];
     }
 });
+
+Broadcast::channel('column.', function($user) {
+    if (\auth('sanctum')->check()) {
+        return ['id' => $user->id, 'name' => $user->username];
+    }
+});
