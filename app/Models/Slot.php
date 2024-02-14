@@ -18,4 +18,9 @@ class Slot extends Model
     public function getUserAttribute() {
         return User::where('id', $this->user_id)->first();
     }
+
+    public function getRoomAttribute() {
+        return $this->room();
+    }
+    
 }

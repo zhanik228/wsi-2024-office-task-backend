@@ -16,7 +16,7 @@ class ChatRoomSeeder extends Seeder
         $rooms = [
             [
                 'name' => 'The Office',
-                'limit' => 4
+                'limit' => 4,
             ],
             [
                 'name' => 'Desk',
@@ -39,7 +39,7 @@ class ChatRoomSeeder extends Seeder
                 'limit' => 1
             ],
             [
-                'name' => 'Open office 2',
+                'name' => 'Open Office 2',
                 'limit' => 4
             ],
             [
@@ -47,11 +47,11 @@ class ChatRoomSeeder extends Seeder
                 'limit' => 15
             ],
             [
-                'name' => 'Break room',
+                'name' => 'Breakroom',
                 'limit' => 5
             ],
             [
-                'name' => 'Silent office 3',
+                'name' => 'Silent room 3',
                 'limit' => 2
             ],
         ];

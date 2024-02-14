@@ -74,6 +74,21 @@ class LoginController extends Controller
     {
         auth()->user()->tokens()->delete();
 
+        $user = User::where('id', \auth()->id())->first();
+
+        $user->update([
+            'chat_room_id' => null,
+        ]);
+
+        Slot::where('user_id', \auth()->id())
+            ->first()
+            ->update([
+                'user_id' => null
+            ]);
+
+        $chatRooms = ChatRoom::with('slot')->get();
+        broadcast(new ColumnUpdate($chatRooms));
+
         return response()->json([
             'successfully logged out'
         ]);

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\user;
 
+use App\Events\ColumnUpdate;
 use App\Http\Controllers\Controller;
+use App\Models\ChatRoom;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -48,6 +50,8 @@ class UserController extends Controller
         }
         $user = User::find($id);
         $user->update(['chat_room_id' => $request->chat_room_id ]);
+        $chatRooms = ChatRoom::with('slot')->get();
+        broadcast(new ColumnUpdate($chatRooms));
         return User::find($id);
     }
 
