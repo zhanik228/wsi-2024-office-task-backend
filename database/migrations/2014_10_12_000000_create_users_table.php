@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('username');
             $table->string('avatar');
             $table->string('password');
+            $table->string('color');
             $table->timestamps();
         });
     }

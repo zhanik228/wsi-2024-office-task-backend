@@ -21,7 +21,8 @@ class User extends Authenticatable
         'username',
         'avatar',
         'password',
-        'chat_room_id'
+        'chat_room_id',
+        'color'
     ];
 
     /**

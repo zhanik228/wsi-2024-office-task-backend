@@ -25,34 +25,32 @@ class LoginController extends Controller
 
         $user = User::where('username', $username)->first();
 
+        function random_color_part()
+        {
+            return str_pad( dechex( mt_rand( 0, 150 ) ), 2, '0', STR_PAD_LEFT);
+        }
+
+        function random_color() {
+            return random_color_part() . random_color_part() . random_color_part();
+        }
+
         if (!$user) {
+            $freeSlot = Slot::whereNull('user_id')->first();
             $user = User::create([
                 'username' => $username,
                 'password' => Hash::make('aaa'),
                 'avatar' => $avatarPath,
                 'created_at' => now(),
                 'updated_at' => null,
-                'chat_room_id' => 1
+                'chat_room_id' => $freeSlot->chat_room_id,
+                'color' => '#'.random_color()
             ]);
 
             $chatRoomLength = count(ChatRoom::all());
 
-            if (!Slot::where('chat_room_id', 1)
-                ->where('id', 1)
-                ->first()->user_id) {
-                Slot::where('chat_room_id', 1)
-                    ->where('id', 1)
-                    ->update([
-                        'user_id' => $user->id
-                    ]);
-
-            } else {
-                Slot::where('chat_room_id', 1)
-                    ->where('id', 2)
-                    ->update([
-                        'user_id' => $user->id
-                    ]);
-            }
+            $freeSlot->update([
+                'user_id' => $user->id
+            ]);
             $chatRooms = ChatRoom::with('slot')->get();
 
             broadcast(new ColumnUpdate($chatRooms));
