@@ -22,6 +22,7 @@ Route::middleware('json.response')->prefix('v1')->group(function() {
     Route::get('log', function() {
         return 'Unauthorized';
     })->name('login');
+    // авторизация пользователя
    Route::post('login', [\App\Http\Controllers\auth\LoginController::class, 'login']);
    Route::middleware(['auth:sanctum'])->group(function() {
        Route::post('logout', [\App\Http\Controllers\auth\LoginController::class, 'logout']);
@@ -30,9 +31,11 @@ Route::middleware('json.response')->prefix('v1')->group(function() {
       return auth('sanctum')->user();
    });
    Route::apiResource('user', \App\Http\Controllers\user\UserController::class);
+//    пути чатов
    Route::middleware(['auth:sanctum',])->get('/chat/rooms', [\App\Http\Controllers\ChatController::class, 'rooms']);
     Route::middleware(['auth:sanctum',])->get('/chat/room/{roomId}/messages', [\App\Http\Controllers\ChatController::class, 'messages']);
     Route::middleware(['auth:sanctum',])->post('/chat/room/{roomId}/message', [\App\Http\Controllers\ChatController::class, 'newMessage']);
+// пути колонок
     Route::get('/columns', [\App\Http\Controllers\ColumnController::class, 'getAllColumns']);
     Route::put('/slot/{slot_id}/user/{user_id}', [\App\Http\Controllers\SlotController::class, 'updateSlot']);
 });
